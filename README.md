@@ -19,11 +19,14 @@ sh install-agents-status.sh &&
 ### Windows PowerShell
 
 ```powershell
-Invoke-WebRequest -UseBasicParsing `
-  https://github.com/workingdad365/agents-status-releases/releases/latest/download/install.ps1 `
-  -OutFile install-agents-status.ps1
-powershell -NoProfile -ExecutionPolicy Bypass -File .\install-agents-status.ps1
-& "$env:LOCALAPPDATA\agents-status\bin\agents-status.cmd"
+& {
+    Invoke-WebRequest -UseBasicParsing -ErrorAction Stop `
+      https://github.com/workingdad365/agents-status-releases/releases/latest/download/install.ps1 `
+      -OutFile install-agents-status.ps1
+    powershell -NoProfile -ExecutionPolicy Bypass -File .\install-agents-status.ps1
+    if ($LASTEXITCODE -ne 0) { throw '설치 실패로 실행 중단' }
+    & "$env:LOCALAPPDATA\agents-status\bin\agents-status.cmd"
+}
 ```
 
 설치 후 새 터미널에서는 `agents-status`로 실행 가능. PATH 자동 등록을 원하지 않으면 `--no-path` / `-NoPath` 사용. fish 등 bash·zsh 이외의 셸에서는 `~/.local/bin`을 PATH에 직접 추가함.
