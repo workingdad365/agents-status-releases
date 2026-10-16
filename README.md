@@ -28,6 +28,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\install-agents-status.ps1
 
 설치 후 새 터미널에서는 `agents-status`로 실행 가능. PATH 자동 등록을 원하지 않으면 `--no-path` / `-NoPath` 사용. fish 등 bash·zsh 이외의 셸에서는 `~/.local/bin`을 PATH에 직접 추가함.
 
+Linux·WSL2·macOS에서는 기존 uv 설치를 확인하면 새 패키지 검증 후 자동으로 `uv tool uninstall agents-status`를 실행하고 릴리스 설치를 계속함. 전환 실패 시 기존 uv 환경과 실행기를 복구함. uv 소유로 확인되지 않은 실행기는 자동 삭제하지 않음.
+
 | 환경 | 요구 사항 |
 |---|---|
 | Linux / WSL2 | x86_64: glibc 2.35 이상, ARM64: glibc 2.39 이상 |
